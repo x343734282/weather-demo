@@ -29,12 +29,6 @@ public class HomeController {
     @GetMapping(path = "/api/v1/realtime/weather", produces = "application/json; charset=UTF-8")
     public ResponseEntity<Object> getWeather(@RequestParam String city) {
 
-        if (city == null || city.length() == 0) {
-            ErrorResponse.ErrorItem item = new ErrorResponse.ErrorItem(ErrorCode.InternalError, "query city name is empty.");
-            ErrorResponse errorResponse = new ErrorResponse(item);
-            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
-        }
-
         WeatherResponseView weatherResponseView = null;
         try {
             weatherResponseView = this.weatherApi.getWeatherByCityName(city);
