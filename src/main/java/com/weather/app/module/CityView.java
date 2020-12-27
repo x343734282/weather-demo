@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @AllArgsConstructor
-public class CitySource {
+public class CityView {
     private String cityCode;
     private String cityName;
 }

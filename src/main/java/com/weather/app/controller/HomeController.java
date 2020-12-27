@@ -1,6 +1,6 @@
 package com.weather.app.controller;
 
-import com.weather.app.module.CitySource;
+import com.weather.app.module.CityView;
 import com.weather.app.module.ErrorCode;
 import com.weather.app.module.ErrorResponse;
 import com.weather.app.module.WeatherResponseView;
@@ -47,9 +47,9 @@ public class HomeController {
     }
 
     @GetMapping(path = "/api/v1/cities", produces = "application/json; charset=UTF-8")
-    public ResponseEntity<List<CitySource>> getCities() {
+    public ResponseEntity<List<CityView>> getCities() {
         this.logger.error("debug");
 
-        return new ResponseEntity<>(Collections.singletonList(new CitySource("aef", "d")), HttpStatus.OK);
+        return new ResponseEntity<>(Collections.singletonList(new CityView("aef", "d")), HttpStatus.OK);
     }
 }
