@@ -11,8 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -27,7 +26,7 @@ public class HomeController {
 
     @GetMapping(path = "/api/v1/realtime/weather", produces = "application/json; charset=UTF-8")
     public ResponseEntity<Object> getWeather(@RequestParam String city) {
-        this.logger.error("debug");
+
         WeatherResponseView weatherResponseView = null;
         try {
             weatherResponseView = this.weatherApi.getWeatherByCityName(city);
@@ -43,6 +42,6 @@ public class HomeController {
     public ResponseEntity<List<CitySource>> getCities() {
         this.logger.error("debug");
 
-        return new ResponseEntity<>(Arrays.asList(new CitySource("aef", "d")), HttpStatus.OK);
+        return new ResponseEntity<>(Collections.singletonList(new CitySource("aef", "d")), HttpStatus.OK);
     }
 }
