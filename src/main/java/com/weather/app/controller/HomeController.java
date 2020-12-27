@@ -4,6 +4,7 @@ import com.weather.app.module.CityView;
 import com.weather.app.module.ErrorCode;
 import com.weather.app.module.ErrorResponse;
 import com.weather.app.module.WeatherResponseView;
+import com.weather.app.service.ICityService;
 import com.weather.app.service.IWeatherApi;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -21,9 +22,11 @@ import java.util.List;
 public class HomeController {
     private final Log logger = LogFactory.getLog(HomeController.class);
     private final IWeatherApi weatherApi;
+    private final ICityService cityService;
 
-    public HomeController(IWeatherApi weatherApi) {
+    public HomeController(IWeatherApi weatherApi, ICityService cityService) {
         this.weatherApi = weatherApi;
+        this.cityService = cityService;
     }
 
     @GetMapping(path = "/api/v1/realtime/weather", produces = "application/json; charset=UTF-8")
@@ -50,6 +53,6 @@ public class HomeController {
     public ResponseEntity<List<CityView>> getCities() {
         this.logger.error("debug");
 
-        return new ResponseEntity<>(Collections.singletonList(new CityView("aef", "d")), HttpStatus.OK);
+        return new ResponseEntity<>(this.cityService.getCities(), HttpStatus.OK);
     }
 }
