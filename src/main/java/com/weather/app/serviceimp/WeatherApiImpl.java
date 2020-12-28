@@ -5,11 +5,9 @@ import com.weather.app.module.WeatherResponseView;
 import com.weather.app.service.IWeatherApi;
 import com.weather.app.weatherapi.CurrentJsonResponse;
 import com.weather.app.weatherapi.WeatherApi;
-import lombok.var;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
-@Service
+@Service()
 public class WeatherApiImpl implements IWeatherApi {
     private final WeatherApiConfigration weatherApiConfigration;
 

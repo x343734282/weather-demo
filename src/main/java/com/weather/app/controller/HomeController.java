@@ -8,6 +8,7 @@ import com.weather.app.service.ICityService;
 import com.weather.app.service.IWeatherApi;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,7 @@ import java.util.List;
 //@Log4j
 public class HomeController {
     private final Log logger = LogFactory.getLog(HomeController.class);
+
     private final IWeatherApi weatherApi;
     private final ICityService cityService;
 
