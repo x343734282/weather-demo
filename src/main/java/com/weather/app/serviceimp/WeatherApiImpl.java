@@ -25,8 +25,8 @@ public class WeatherApiImpl implements IWeatherApi {
         return new WeatherResponseView(cityName
                 , currentJsonResponse.getCurrent().getLastUpdated()
                 , currentJsonResponse.getCurrent().getCondition().getText()
-                , currentJsonResponse.getCurrent().getTempC() + "C"
-                , currentJsonResponse.getCurrent().getWindKph() + "");
+                , currentJsonResponse.getCurrent().getTempC().toString()
+                , currentJsonResponse.getCurrent().getWindKph().toString());
     }
 
 }
