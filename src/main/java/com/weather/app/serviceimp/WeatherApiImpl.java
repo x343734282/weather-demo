@@ -20,7 +20,7 @@ public class WeatherApiImpl implements IWeatherApi {
 
         CurrentJsonResponse currentJsonResponse = WeatherApi.RealtimeWeatherApi(cityName, weatherApiConfigration.getKey());
 
-        return new WeatherResponseView(cityName
+        return new WeatherResponseView(currentJsonResponse.getLocation().getName()
                 , currentJsonResponse.getCurrent().getLastUpdated()
                 , currentJsonResponse.getCurrent().getCondition().getText()
                 , currentJsonResponse.getCurrent().getTempC().toString()
