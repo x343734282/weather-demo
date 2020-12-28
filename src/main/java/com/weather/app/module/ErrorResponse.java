@@ -38,13 +38,9 @@ public class ErrorResponse {
         this.errors = errors;
     }
 
-//    public List<ErrorResponse.ErrorItem> getErrors() {
-//        return this.errors;
-//    }
-//
-//    public void setErrors(List<ErrorResponse.ErrorItem> errors) {
-//        this.errors = errors;
-//    }
+    public boolean IsHaveError() {
+        return errors.size() > 0;
+    }
 
     public void addError(ErrorResponse.ErrorItem item) {
         this.errors.add(item);

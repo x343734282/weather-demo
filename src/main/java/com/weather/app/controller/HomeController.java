@@ -31,10 +31,11 @@ public class HomeController {
 
     @GetMapping(path = "/api/v1/realtime/weather", produces = "application/json; charset=UTF-8")
     public ResponseEntity<Object> getWeather(@RequestParam String city) {
+        ErrorResponse errorResponse = new ErrorResponse();
 
         if (city == null || city.length() == 0) {
             ErrorResponse.ErrorItem item = new ErrorResponse.ErrorItem(ErrorCode.InternalError, "query city name is empty.");
-            ErrorResponse errorResponse = new ErrorResponse(item);
+            errorResponse.addError(item);
             return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
         }
 
@@ -44,12 +45,16 @@ public class HomeController {
         } catch (Exception e) {
             //TODO;
             logger.error(e);
+
+            ErrorResponse.ErrorItem item = new ErrorResponse.ErrorItem(ErrorCode.ApiError, "api error.");
+            errorResponse.addError(item);
         }
 
-        return new ResponseEntity<>(weatherResponseView, HttpStatus.OK);
+        ResponseEntity entity = errorResponse.IsHaveError() ? new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST) : new ResponseEntity<>(weatherResponseView, HttpStatus.OK);
+        return entity;
     }
 
-    @GetMapping(path = "/api/v1/cities", produces = "application/json; charset=UTF-8")
+    //    @GetMapping(path = "/api/v1/cities", produces = "application/json; charset=UTF-8")
     public ResponseEntity<List<CityView>> getCities() {
         this.logger.error("debug");
 

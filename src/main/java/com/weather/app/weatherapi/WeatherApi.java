@@ -24,7 +24,7 @@ public class WeatherApi {
             });
         } catch (RestClientException e) {
             logger.error("api call error:" + e);
-            throw new Exception();
+            throw new Exception(e);
         }
 
         return (CurrentJsonResponse) response.getBody();
