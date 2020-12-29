@@ -5,7 +5,7 @@ import com.weather.app.module.ErrorCode;
 import com.weather.app.module.ErrorResponse;
 import com.weather.app.module.WeatherResponseView;
 import com.weather.app.service.ICityService;
-import com.weather.app.service.IWeatherApi;
+import com.weather.app.service.IWeatherAdapterService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.http.HttpStatus;
@@ -21,10 +21,10 @@ import java.util.List;
 public class HomeController {
     private final Log logger = LogFactory.getLog(HomeController.class);
 
-    private final IWeatherApi weatherApi;
+    private final IWeatherAdapterService weatherApi;
     private final ICityService cityService;
 
-    public HomeController(IWeatherApi weatherApi, ICityService cityService) {
+    public HomeController(IWeatherAdapterService weatherApi, ICityService cityService) {
         this.weatherApi = weatherApi;
         this.cityService = cityService;
     }

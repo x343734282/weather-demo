@@ -1,48 +1,55 @@
 package com.weather.app;
 
-import com.weather.app.module.CityView;
 import com.weather.app.module.WeatherResponseView;
-import com.weather.app.service.ICityService;
-import com.weather.app.service.IWeatherApi;
+import com.weather.app.service.IWeatherAdapterService;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.util.Assert;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.List;
+import static org.hamcrest.Matchers.containsString;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
-@ExtendWith(SpringExtension.class)
-//@TestPropertySource("classpath:application-test.properties")
+@AutoConfigureMockMvc
 class DemoApplicationTests {
 
-    @Autowired
-    private IWeatherApi weatherApi;
+    @MockBean
+    private IWeatherAdapterService weatherApi;
 
     @Autowired
-    private ICityService cityService;
+    private MockMvc mvc;
 
     @Test
     void weatherApiTest() {
-        WeatherResponseView responseView = null;
+
         try {
-            responseView = this.weatherApi.getWeatherByCityName("dalian");
+            Mockito.when(this.weatherApi.getWeatherByCityName("dalian")).thenReturn(new WeatherResponseView("dalian", "", "", "", ""));
 
+            this.mvc.perform(get("/api/v1/realtime/weather").queryParam("city", "dalian")).andDo(print()).andExpect(status().isOk())
+                    .andExpect(content().string(containsString("dalian")));
         } catch (Exception e) {
-
         }
 
-        Assert.notNull(responseView, "api right key case error.");
     }
 
-
     @Test
-    void citySource() {
-        List<CityView> cities = this.cityService.getCities();
+    void weatherApiErrorCaseTest() {
 
-        Assert.isTrue(cities.size() == 3, "city service error.");
+        try {
+            Mockito.when(this.weatherApi.getWeatherByCityName("dalian")).thenThrow(new Exception());
+
+            this.mvc.perform(get("/api/v1/realtime/weather")
+                    .queryParam("city", "dalian"))
+                    .andDo(print())
+                    .andExpect(status().isBadRequest());
+        } catch (Exception e) {
+        }
+
     }
 
 }

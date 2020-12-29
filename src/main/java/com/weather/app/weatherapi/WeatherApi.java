@@ -12,6 +12,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Objects;
 
+@Deprecated
 public class WeatherApi {
     private final static Log logger = LogFactory.getLog(WeatherApi.class);
 
